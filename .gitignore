@@ -1,0 +1,5 @@
+
+dist/
+sqlScripts/
+node_modules/
+.env
