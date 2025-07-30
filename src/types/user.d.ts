@@ -1,6 +1,5 @@
 export interface userInterface {
-    id: string,
-    token: string
+    user_id: string,
     username:string,
-    password:string
+    accessToken?: string,
 }
