@@ -57,16 +57,15 @@ router.post("/register", async (req: Request, res: Response) => {
     const { username, userpassword } = req.body
 
     const user_id = `user-${v4()}`;
-    const userToken = `Token-${v4()}`;
 
     const encriptedPassword = await bcrypt.hash(userpassword, 10)
-
+    const {refreshToken} = createJWToken(user_id, username)!
     try {
         const { error } = await supabase
             .from('users')
-            .insert({ token: userToken, user_id: user_id, username: username, userpassword: encriptedPassword })
+            .insert({ token: refreshToken, user_id: user_id, username: username, userpassword: encriptedPassword })
         console.log(error)
-        res.status(200).send({ successful: true, token: userToken, message: "user created succesfully" });
+        res.status(200).send({ successful: true, token: refreshToken, message: "user created succesfully" });
     }
     catch (error: any) {
         if (error.code === "23505") {
